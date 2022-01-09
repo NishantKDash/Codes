@@ -1,0 +1,62 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+public class Solution {
+    public static void main(String args [])
+    {
+      ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
+      int arr [] = new int[]{1,2,3,4,5,6,7,8,9,10};
+      Arrays.sort(arr);
+      Permutation(arr, ans, 0);
+
+      for(int i = 0;i< ans.size();i++)
+      {
+          System.out.print("[");
+          for(int j =0;j<ans.get(i).size();j++)
+            System.out.print(ans.get(i).get(j)+" ");
+            System.out.print("]");
+            System.out.println();
+      }
+
+       
+        
+        
+    
+    }
+    public static void Permutation(int arr [], ArrayList<ArrayList<Integer>> ans, int index )
+    {
+        if(index==arr.length)
+        {
+            ArrayList<Integer> res = new ArrayList<>();
+            for(int ele:arr)
+            {
+                res.add(ele);
+            }
+            ans.add(res);
+            return;
+        }
+
+        for(int i=index;i<arr.length;i++)
+        {
+            if(i!=index&&arr[i]==arr[index])
+            continue;
+            int temp = arr[i];
+            arr[i]=arr[index];
+            arr[index] = temp;
+
+            Permutation(arr,ans,index+1);
+
+            int tem = arr[i];
+            arr[i]=arr[index];
+            arr[index] = tem;
+
+        }
+         
+    }
+    
+      
+    
+
+}
+
+        
