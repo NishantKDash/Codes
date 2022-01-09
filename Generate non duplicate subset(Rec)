@@ -1,0 +1,44 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+public class Solution {
+    public static void main(String args [])
+    {
+      ArrayList<ArrayList<Integer>> powerset = new ArrayList<ArrayList<Integer>>();
+      ArrayList<Integer> set = new ArrayList<>();
+      int arr [] = new int[]{1,2,3,4};
+      Arrays.sort(arr);
+      generate(arr, powerset, set, 0);
+
+      for(int i = 0;i< powerset.size();i++)
+      {
+          System.out.print("[");
+          for(int j =0;j<powerset.get(i).size();j++)
+            System.out.print(powerset.get(i).get(j)+" ");
+            System.out.print("]");
+            System.out.println();
+      }
+
+       
+        
+        
+    
+    }
+    public static void generate(int arr [], ArrayList<ArrayList<Integer>> powerset, ArrayList<Integer> set, int index )
+    {
+        powerset.add(new ArrayList<Integer>(set));
+        System.out.println(index+" index");
+        for(int i=index;i<arr.length;i++)
+        {
+            if(i!=index&&(arr[i]==arr[i-1]))
+            continue;
+            set.add(arr[i]);
+            System.out.println("add"+arr[i]);
+            generate(arr,powerset,set,i+1);
+            set.remove(set.size()-1);
+            System.out.println("remove"+arr[i]);
+        }
+        
+    }
+
+}
