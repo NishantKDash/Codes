@@ -1,0 +1,102 @@
+public class Solution {
+
+    static class ListNode{
+        int val;
+        ListNode prev;
+        ListNode next;
+        public ListNode(int val)
+        {
+            this.val = val;
+            prev = null;
+            next = null;
+        }
+    }
+
+    HashMap<Integer,ListNode> map ;
+    ListNode head;
+    ListNode tail;
+    int size;
+    int capacity;
+    
+    public Solution(int capacity) {
+
+        head = new ListNode(-1);
+        tail = new ListNode(-1);
+        head.next = tail;
+        tail.prev = head;
+        map = new HashMap<>();
+        size =0;
+        this.capacity = capacity;
+        
+    }
+    
+    public int get(int key) {
+
+        if(map.containsKey(key))
+        {
+            //since we used this recently we remove it from the present position and insert at tail
+            // no change in size and hash map
+            // and return the node value
+            ListNode temp = map.get(key);
+            delete(temp);
+            addToTail(temp);
+            return map.get(key).val;
+        }
+        else
+        return -1;
+        
+    }
+    
+    public void set(int key, int value) {
+
+        if(map.containsKey(key))
+        {
+            //if map already contains the key 
+            // since we used the key just remove from its original pos and put it at addToTail
+            // no change in size and HashMap
+            // if value of key is differnt just change node value
+            ListNode temp = map.get(key);
+            temp.val = value;
+            delete(temp);
+            addToTail(temp);
+        }
+        else
+        {
+            if(size == capacity)
+            {
+                for(int ele: map.keySet())
+                {
+                    if(map.get(ele)==head.next)
+                    {
+                        map.remove(ele);
+                        break;
+                    }
+                }
+                delete(head.next);
+                size--;
+            }
+          ListNode temp = new ListNode(value);
+          map.put(key,temp);
+          addToTail(temp);
+          size++;
+        }
+
+
+        
+    }
+
+    public void addToTail(ListNode x){
+
+        x.next = tail;
+        x.prev  = tail.prev;
+        tail.prev.next = x;
+        tail.prev = x;
+    }
+
+    public void delete(ListNode x)
+    {
+        x.prev.next = x.next;
+        x.next.prev = x.prev;
+        
+    }
+}
